@@ -1,0 +1,358 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+
+@import "~material-icons/iconfont/material-icons.css";
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+// $dark-color-primary: mat.define-palette(mat.$purple-palette, 500);
+// $dark-color-accent: mat.define-palette(mat.$deep-orange-palette, 500);
+// $dark-color-warn: mat.define-palette(mat.$red-palette, 500);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+// $dark-theme: mat.define-dark-theme((
+//     color: (
+//         primary: $dark-color-primary,
+//         accent: $dark-color-accent,
+//         warn: $dark-color-warn,
+//     )
+// ));
+
+// Paleta para esquema de colores oscuro
+$app-dark-primary: mat-palette($mat-pink, 500);
+$app-dark-accent:  mat-palette($mat-teal, 500);
+$app-dark-warn:    mat-palette($mat-red, 500);
+
+// Paleta para esquema de colores claro
+$app-light-primary: mat-palette($mat-purple, 400);
+$app-light-accent:  mat-palette($mat-cyan, 500);
+$app-light-warn:    mat-palette($mat-red, 500);
+
+$app-dark-theme: mat-dark-theme((
+    color: (
+        primary: $app-dark-primary,
+        accent: $app-dark-accent,
+        warn: $app-dark-warn
+    )
+));
+
+$app-light-theme: mat-light-theme((
+    color: (
+        primary: $app-light-primary,
+        accent: $app-light-accent,
+        warn: $app-light-warn,
+    )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+// @include mat.all-component-themes($dark-theme);
+
+@include angular-material-theme($app-dark-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+:root {
+    font-size: 24px;
+    --toolbar-height: 56px;
+    --navbar-width: 200px;
+    --route-container-padding: 25px;
+    --container-radius: 35px;
+}
+
+html, body {
+    scroll-behavior: smooth;
+    padding: 0;
+    margin: 0;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+input {
+    font-family: 'Roboto', sans-serif;
+}
+
+.app-dark-theme {
+    --color-primary: #{mat-color($app-dark-primary)};
+    --color-accent: #{mat-color($app-dark-accent)};
+    --color-warn: #{mat-color($app-dark-warn)};
+
+    --color-background: #212121;
+    --color-text: #f5f5f5; // black
+    --color-text-disabled: rgba(255, 255, 255, 0.3);
+
+    --color-overlay: rgba(245, 245, 245, 0.5);
+
+    --color-icon: #eeeeee;
+    --color-card-background: #424242;
+    --color-toolbar-background: mat-color(mat-palette($mat-purple, 500));
+    --color-highlight: mat-color(mat-palette($mat-deep-orange, 500));
+    --color-border: #757575;
+    --color-text-fade: #bdbdbd;
+    --color-card-fade: #616161;
+
+    --color-accent-fade: #80cbc4;
+    --color-success: #4caf50;
+    --color-error: #f44336;
+
+    --sign-in-background: url("./assets/blobs/dark-green-blob.svg");
+    --color-spinner: white;
+
+    --color-void: #bdbdbd;
+    --color-ok: #4caf50;
+    --color-wip: #e91e63;
+    --color-nok: #f44336;
+    --color-hold: #9c27b0;
+
+    --color-missing: #ff5722;
+    --color-background-missing: #ffccbc;
+
+    --color-surplus: #9c27b0;
+    --color-background-surplus: #e1bee7;
+
+    --color-defective: #03a9f4;
+    --color-background-defective: #b3e5fc;
+
+    background-color: var(--color-background);
+    transition: background-color 0.25s ease-in,
+                color 0.25s ease-in;
+
+    color: var(--color-text);
+    fill: var(--color-text);
+}
+
+.app-light-theme {
+    --color-primary: #{mat-color($app-light-primary)};
+    --color-accent: #{mat-color($app-light-accent)};
+    --color-warn: #{mat-color($app-light-warn)};
+
+    --color-background: #fafafa;
+    --color-text: #263238; // black
+    --color-text-disabled: #00000042;
+
+    --color-overlay: rgba(0, 0, 0, 0.7);
+
+    --color-icon: #455a64;
+    --color-card-background: #f5f5f5;
+    --color-toolbar-background: mat-color(mat-palette($mat-purple, 200));
+    --color-highlight: mat-color(mat-palette($mat-deep-orange, 200));
+    --color-border: #90a4ae;
+    --color-text-fade: #607d8b;
+    --color-card-fade: #e0e0e0;
+
+    --sign-in-background: url("./assets/blobs/light-green-blob.svg");
+    --color-spinner:#37474f;
+
+    --color-ok: #4caf50;
+    --color-wip: #e91e63;
+    --color-nok: #f44336;
+    --color-hold: #9c27b0;
+
+    background-color: var(--color-background);
+    transition: background-color 0.25s ease-in,
+                color 0.25s ease-in;
+
+    color: var(--color-text);
+    fill: var(--color-text);
+}
+
+.text-capsule {
+    text-align: center;
+    padding: 0px 7.5px;
+    border-radius: 25px;
+    font-weight: 200;
+    box-sizing: border-box;
+}
+
+.btn-small {
+    font-size: 11px !important;
+    padding: 4px 8px;
+    box-sizing: content-box !important;
+    height: 30px !important;
+
+    ::ng-deep.mat-button-wrapper {
+        height: 30px !important;
+    }
+
+    .mat-icon {
+        font-size: 14px !important;
+        line-height: 14px !important;
+        height: 14px !important;
+        width: 14px !important;
+    }
+}
+
+.btn-large {
+    font-size: 20px !important;
+    padding: 5px 25px !important;
+    box-sizing: content-box !important;
+    height: 35px !important;
+}
+
+.btn-xlarge {
+    font-size: 28px !important;
+    padding: 10px 30px !important;
+    box-sizing: content-box !important;
+    height: 45px !important;
+}
+
+.btn-round {
+    border-radius: 100px !important;
+}
+
+.page-header {
+    font-size: 28px !important;
+}
+
+.route-container {
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+.error-snackbar {
+    background-color: #d50000 !important;
+    color: white !important;
+
+    button {
+        color: #e1bee7 !important;
+    }
+}
+
+.success-snackbar {
+    background-color: #4caf50 !important;
+    color: white !important;
+
+    button {
+        color: #e1bee7 !important;
+    }
+}
+
+.warning-snackbar {
+    background-color: #ff5722 !important;
+    color: white !important;
+
+    button {
+        color: #e1bee7 !important;
+    }
+}
+
+.btn-red {
+    background-color: #f44336 !important;
+
+    &:disabled {
+        background-color: rgba(255, 255, 255, 0.12) !important;;
+    }
+}
+
+.btn-green {
+    background-color: #4caf50 !important;
+
+    &:disabled {
+        background-color: rgba(255, 255, 255, 0.12) !important;;
+    }
+}
+
+.btn-deep-purple {
+    background-color: #673ab7 !important;
+
+    &:disabled {
+        background-color: rgba(255, 255, 255, 0.12) !important;;
+    }
+}
+
+.transparent-backdrop {
+    background-color: transparent;
+}
+
+.no-padding-panel {
+    mat-dialog-container {
+        padding: 0;
+    }
+}
+
+.xs-padding-panel {
+    mat-dialog-container {
+        padding: 6px 6px 0 6px;
+    }
+}
+
+.l-height-panel {
+    mat-dialog-container {
+        max-height: 70vh;
+    }
+}
+
+.mobile-dialog-panel {
+    mat-dialog-container {
+        border-top-left-radius: var(--container-radius);
+        border-top-right-radius: var(--container-radius);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: fit-content;
+        padding: 0;
+        box-sizing: border-box;
+        transition: none;
+        animation: slide-in 0.5s ease-in;
+    }
+
+    @keyframes slide-in {
+        0% {
+            bottom: -100vh;
+        }
+
+        100% {
+            bottom: 0;
+        }
+    }
+}
+
+.l-width-panel {
+    mat-dialg-container {
+        max-width: 1050px;
+    }
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #bdbdbd;
+    border-radius: 5px;
+}

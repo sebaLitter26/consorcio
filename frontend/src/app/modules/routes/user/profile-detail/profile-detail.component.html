@@ -1,0 +1,44 @@
+
+<div class="container">
+    <h1 class="header">Mi perfil</h1>
+    <div class="card" *ngIf="empleado">
+      <div class="card-personal">
+        <mat-card class="mat-card__container">
+          <mat-card-content clas="mat-card__personal-content">
+            <div class="mat-card__presentation">
+            <img class="mat-card__presentation__img" [src]="empleado[0].Foto" alt="Empleado">
+             <h2 class="heading-primary">{{empleado[0].NombreApellido}}</h2>
+             <h3 class="heading-secondary">{{empleado[0].Funcion}}</h3>
+            </div>
+            <div class="mat-card__personal-information">
+              <h2 class="heading-primary">Datos personales</h2>
+              <ul>
+
+                <li class="personal">
+                  <span class="personal__label">Legajo</span>
+                  <span class="personal__text">{{empleado[0].Legajo}}</span>
+                </li>
+
+                <li class="personal">
+                  <span class="personal__label">Fecha de ingreso</span>
+                  <span class="personal__text">{{empleado[0].FechaPuesto}}</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- <div class="btn-container">
+              <button class="btn" [style.background-color]="qrAction == 'reprintQR' ? 'limegreen' : 'var(--color-accent)'" mat-flat-button appRoundButton color="accent"(click)="printMyQR()">
+                {{this.qrActionButton}}&nbsp;<mat-icon>qr_code</mat-icon>
+              </button>
+            </div> -->
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="card-miscellaneous">
+        <ng-container *ngFor="let item of mapRef; index as i">
+            <app-dashboard-card [value]="empleado[0][item.prop]" [description]="item.header" [color]="item.color" [icon]="item.icon"></app-dashboard-card>
+        </ng-container>
+      </div>
+    </div>
+
+  </div>

@@ -1,0 +1,40 @@
+<main>
+    <h1>Ingreso a SIGE</h1>
+
+    <div class="inputs-container">
+        <app-cool-input 
+            [icon]="'person'"
+            [placeholder]="'Ingrese usuario'"
+            [fontSize]="'16px'"
+            [iconSize]="'32px'"
+            [label]="'Usuario'"
+            [type]="'text'"
+            [onKeyDownCallback]="keyDownCallback"
+            (valueChanges)="username = $event"
+        ></app-cool-input>
+
+        <app-cool-input
+            [icon]="'vpn_key'"
+            [placeholder]="'Ingrese contraseña'"
+            [fontSize]="'16px'"
+            [iconSize]="'32px'"
+            [label]="'Contraseña'"
+            [type]="'password'"
+            [onKeyDownCallback]="keyDownCallback"
+            (valueChanges)="password = $event"
+        ></app-cool-input>
+        
+        <button 
+            class="btn-large btn-round"
+            mat-flat-button
+            color="accent"
+            (click)="signIn()"
+            [disabled]="!username || !password"
+        >   
+            <mat-spinner *ngIf="fetching; else displayText" diameter="32"></mat-spinner>
+            <ng-template #displayText>
+                Ingresar
+            </ng-template>
+        </button>
+    </div>
+</main>

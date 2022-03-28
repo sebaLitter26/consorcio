@@ -1,0 +1,130 @@
+@mixin respond($breakpoint) {
+    @if $breakpoint == phone {
+        @media only screen and (max-width: 37.5em) {
+            @content;
+        } //600px
+    }
+}
+
+.heading {
+    &-primary {
+        margin: 0;
+        font-size: 0.9em;
+        font-weight: 700;
+    }
+
+    &-secondary {
+        font-size: 0.8em;
+    }
+}
+
+.container {
+    max-height: calc(100vh - var(--toolbar-height));
+    overflow: hidden;
+    @include respond(phone) {
+        max-height: initial;
+    }
+}
+
+.card {
+    display: grid;
+    padding: 2em;
+    grid-template-columns: 0fr 2fr;
+    padding-top: 0;
+    @include respond(phone) {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &-personal {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &-miscellaneous {
+        display: grid;
+        height: 17em;
+    }
+}
+
+.mat-card {
+    &-content {
+        font-size: 18px;
+        width: 15em;
+    }
+
+    &__presentation {
+        background-color: var(--color-border);
+        height: 4em;
+        width: 100%;
+        margin-top: 2em;
+        padding-top: 3em;
+        text-align: center;
+        position: relative;
+        border: solid 1px #e0e0e0;
+        border-radius: 1em;
+
+        &__img {
+            position: absolute;
+            top: -2.5em;
+            left: 50%;
+            margin-left: -2.5em;
+            width: 5em;
+            height: 5em;
+            object-fit: cover;
+            border-radius: 50%;
+            border: solid 1px #e0e0e0;
+        }
+    }
+
+    &__container {
+        height: 25em;
+        margin-right: 2em;
+        display: flex;
+        justify-content: center;
+
+        @include respond(phone) {
+            margin-right: 0;
+            margin-bottom: 1em;
+        }
+    }
+
+    &__personal-information {
+        margin-top: 1em;
+    }
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    justify-content: space-between;
+    display: flex;
+    font-size: 0.8em;
+    margin-bottom: 0.3em;
+}
+
+.personal {
+    &__label {
+        color: #828282;
+    }
+}
+
+.btn-container {
+    margin-top: 4em;
+    text-align: center;
+}
+
+.btn {
+    @include respond(phone) {
+        display: none;
+    }
+}
+
+.header {
+    height: 34px;
+    margin: 1em 0 1em 2em;
+}

@@ -1,0 +1,64 @@
+main {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+
+    width: 250px;
+    height: 150px;
+    border-radius: 12px;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    .signal {
+        position: absolute;
+
+        width: 17.5px;
+        height: 17.5px;
+
+        top: 12px;
+        right: 12px;
+    }
+
+    .number-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+
+        margin-bottom: 1rem;
+
+        .chip {
+            width: 30px;
+            height: 27.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .number {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            
+            h3 {
+                font-size: 18px;
+                color: white;
+            }
+
+            h3:not(:first-child) {
+                margin-left: 10px;
+            }
+        }
+    }
+
+    .logo {
+        position: absolute;
+
+        bottom: 12px;
+        right: 12px;
+    }
+}

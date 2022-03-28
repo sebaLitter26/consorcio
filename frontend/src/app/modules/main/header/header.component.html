@@ -1,0 +1,69 @@
+<mat-toolbar>
+    <div class="navbar">
+        <button mat-icon-button (click)="toggleNavbar()">
+            <mat-icon>{{ navbarIsOpen ? 'clear' : 'menu' }}</mat-icon>
+        </button>
+
+        <span appDesktop>SIGE</span>
+
+        <button
+            mat-stroked-button
+            class="btn-round btn-small btn-version"
+            [matMenuTriggerFor]="versionMenu"
+        >
+            Versiones<mat-icon>arrow_drop_down</mat-icon>
+        </button>
+    </div>
+
+    <div class="profile" matRipple [matMenuTriggerFor]="profileMenu">
+        <h3 appDesktop>{{ profileService.user.nombre }}  ({{ numberRef.parseInt(profileService.user.legajo) }})</h3>
+        <img [src]="profileService.user.fotoUrl">
+        <mat-icon>arrow_drop_down</mat-icon>
+    </div>
+</mat-toolbar>
+
+<mat-menu #profileMenu="matMenu" [overlapTrigger]="false" [xPosition]="'before'">
+    <!-- <div mat-menu-item>
+        <mat-slide-toggle #slideToggle (change)="toggleColorTheme()" (click)="$event.stopPropagation();">
+            <i [ngClass]="(slideToggle.checked) ? 'fas fa-sun fa-lg' : 'fas fa-moon fa-lg'"></i>
+        </mat-slide-toggle>
+    </div> -->
+
+    <button mat-menu-item routerLink="users/profile">
+        <mat-icon>account_circle</mat-icon>
+        Mi perfil
+    </button>
+
+    <button appButtonAuthorization="station_edit-configuration" mat-menu-item (click)="openStationConfiguration()">
+        <mat-icon>monitor</mat-icon>
+        Mi estación
+    </button>
+
+    <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        Cerrar sesión
+    </button>
+
+    <div
+        class="sandbox-mode-wrapper"
+        mat-menu-item
+        (click)="$event.stopPropagation()"
+        *ngIf="!environment.production && !environment.preProduction"
+    >
+        <mat-slide-toggle #sandboxToggle [checked]="sandboxService.isSandboxMode()" (change)="toggleSandboxMode()" (click)="$event.stopPropagation();">
+            Modo sandbox
+        </mat-slide-toggle>
+    </div>
+</mat-menu>
+
+<mat-menu #versionMenu="matMenu" [overlapTrigger]="false" [xPosition]="'before'">
+    <p mat-menu-item>
+        WEB v{{ webVersion$ | async }}
+    </p>
+    <p mat-menu-item>
+        API v{{ apiVersion$ | async }}
+    </p>
+    <p mat-menu-item>
+        Interfaces v{{ interfacesVersion$ | async }}
+    </p>
+</mat-menu>

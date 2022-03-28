@@ -1,0 +1,29 @@
+<main
+    [style.background-color]="this._cardType != null ? _cardsConfigurationMap[this._cardType].backgroundColor : '#FFFFFF'"
+    [ngClass]="elevationClass"
+    [style.background-image]="this._cardType != null ? 'url(' + _cardsConfigurationMap[this._cardType].backgroundImage + ')' : ''"
+>
+    <img
+        src="../../../../../assets/bank-cards/signal.png"
+        class="signal"
+    >
+
+    <div class="number-container">
+        <!-- <img
+            src="../../../../../assets/bank-cards/chip.png"
+            class="chip"
+        > -->
+
+        <div class="number">
+            <ng-container *ngFor="let number of _cardNumbers; let i = index;">
+                <h3>{{ number }}</h3>
+            </ng-container>
+        </div>
+    </div>
+
+    <img
+        [src]="this._cardType != null ? _cardsConfigurationMap[this._cardType].logo : ''"
+        [style.height]="this._cardType != null ? _cardsConfigurationMap[this._cardType].height : ''"
+        class="logo"
+    >
+</main>

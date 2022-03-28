@@ -1,0 +1,211 @@
+<div
+    class="component-container"
+>
+    <div
+        [id]="'scroll-highlight-' + this.randomId"
+        class="scroll-highlight"
+        [style.border-top-left-radius]="borderRadius"
+        [style.border-top-right-radius]="borderRadius"
+        [style.border-bottom-left-radius]="!usePagination ? borderRadius : 'none'"
+        [style.border-bottom-right-radius]="!usePagination ? borderRadius : 'none'"
+        *ngIf="useScrollHighlight"
+    >
+    </div>
+
+    <div
+        [id]="'table-container-' + this.randomId"
+        [style.border-top-left-radius]="borderRadius"
+        [style.border-top-right-radius]="borderRadius"
+        [style.border-bottom-left-radius]="!usePagination ? borderRadius : 'none'"
+        [style.border-bottom-right-radius]="!usePagination ? borderRadius : 'none'"
+        [style.background-color]="backgroundColor"
+        [ngClass]="elevationClass"
+        [style.border-width]="borderWidth"
+        [style.border-color]="borderColor"
+        [style.border-style]="'solid'"
+        class="table-container"
+    >
+        <ng-container *ngIf="tableDefinition">
+            <table
+                [id]="'table-' + this.randomId"
+                mat-table
+                [dataSource]="dataSource"
+                multiTemplateDataRows
+                cdkDropList
+                (cdkDropListDropped)="drop($event)"
+            >
+                <!-- <ng-container matColumnDef="hoverColumn">
+                    <th mat-header-cell *matHeaderCellDef style="padding: 0; width: 0;"></th>
+                    <td mat-cell *matCellDef="let element" style="padding: 0;" [@hoverExpand]="element == hoverItem ? 'expanded' : 'collapsed'">
+                        <div
+                            class="hover-message"
+                            [@hoverExpand]="element == hoverItem ? 'expanded' : 'collapsed'"
+                        >
+                            <mat-icon *ngIf="hoverIcon">{{ hoverIcon }}</mat-icon>{{ hoverMessage }}
+                        </div>
+                    </td>
+                </ng-container> -->
+
+                <ng-container *ngFor="let column of displayedColumns; let i = index;">
+                    <!-- Columna de expansión de detalles -->
+                    <ng-container *ngIf="column == 'chevron'" matColumnDef="chevron">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" class="chevron-cell item-cell">
+                            <mat-icon id="expand-icon" [@rotate]="element == expandedItem ? 'bottom' : 'right'"
+                                [style.font-size]="fontSize + 'px'"
+                                [style.width]="fontSize + 'px'"
+                                [style.height]="fontSize + 'px'"
+                                [style.line-height]="fontSize + 'px'"
+                            >chevron_right</mat-icon>
+                        </td>
+                    </ng-container>
+
+                    <!-- Columna de selección múltiple -->
+                    <ng-container *ngIf="column == 'selection'" matColumnDef="selection">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox *ngIf="allowSelectAll" (change)="updateAllRows($event)" (click)="$event.stopPropagation()" [checked]="_allRowsSelected" [disabled]="allRowsAreDisabled()"></mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="item-cell">
+                            <mat-checkbox (change)="updateRow($event, element)" (click)="$event.stopPropagation()" [checked]="_allRowsSelected && (selectionDisabledCallback ? !selectionDisabledCallback(element) : true)" [disabled]="selectionDisabledCallback ? selectionDisabledCallback(element) : false"></mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <ng-container *ngIf="column == 'handle'" matColumnDef="handle">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" class="chevron-cell item-cell">
+                            <mat-icon
+                                cdkDragHandle
+                                cdkDragRootElement="mat-row"
+                                (mouseenter)="dragDisabled = false"
+                                (mouseleave)="dragDisabled = true"
+                                (touchstart)="dragDisabled = false"
+                                (touchend)="dragDisabled = true"
+                            >
+                                drag_indicator
+                            </mat-icon>
+                        </td>
+                    </ng-container>
+
+                    <!-- Columnas de datos -->
+                    <ng-container [matColumnDef]="column" *ngIf="column != 'chevron' && column != 'hoverColumn' && column != 'filters' && column != 'handle' && column != 'selection'">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <div class="column-header-content" [style.height]="_filtersActive ? '80px' : '100%'">
+                                <div class="column-header-text" (click)="__onSortChange__(i)">
+                                    <p>{{ headerCellDefinitions[i] }}</p>
+                                    <mat-icon *ngIf="_getSortIndex(i) >= 0">{{ _activeSorts[_getSortIndex(i)].value == 'asc' ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+                                </div>
+                                <input *ngIf="_filtersActive" class="filter-input" (ngModelChange)="__onFilterChange__($event, column)" [ngModel]="lastFilterValue">
+                            </div>
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="item-cell" [style.max-width]="cellsMaxWidth ? cellsMaxWidth : ''" >
+                            <ng-template *ngIf="customColumnComponents[i]" customCellHost></ng-template>
+                            <div *ngIf="!customColumnComponents[i]" class="table-cell-content">
+                                <p [ngStyle]="columnStyles[i] ? columnStyles[i]!(element) : {}">
+                                    <!-- En caso de que el objeto no sea un valor primitivo, no mostrar nada. -->
+                                    <!-- En caso de que se reciba un formater para la columna actual, utilizar ese formato para mostrar el dato. -->
+                                    {{  columnFormaters[i] ? columnFormaters[i]!(element) : (utilsService.getObjectType(element[column]) == "primitive" ? element[column] : '') }}
+                                </p>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Columna de toggle de filtros -->
+                    <ng-container *ngIf="column == 'filters'" matColumnDef="filters">
+                        <th mat-header-cell *matHeaderCellDef style="text-align: right;">
+                            <mat-icon id="filters-icon" (click)="toggleFilters()" [ngClass]="_filtersActive ? 'active' : ''" [matTooltip]="_filtersActive ? 'Desactivar filtros' : 'Activar filtros'">filter_alt</mat-icon>
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="filter-cell item-cell"></td>
+                    </ng-container>
+                </ng-container>
+
+                <!-- Columna expansible de detalles. Consiste en una columna adicional que ocupa de largo todas las columnas de la tabla. -->
+                <ng-container matColumnDef="detailRow">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length + (hoverIcon || hoverMessage ? 1 : 0)">
+                        <div
+                            class="item-detail"
+                            [@detailExpand]="element == expandedItem ? 'expanded' : 'collapsed'"
+                        >
+                            <!-- Host para componentes dinámicos. Se toma el componente inyectado para mostrar los detalles de la fila. -->
+                            <ng-template itemDetailHost></ng-template>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <!-- Columnas de header para agrupar columnas -->
+                <ng-container *ngFor="let column of groupingHeader.columnNames; let i = index;">
+                    <ng-container [matColumnDef]="column">
+                        <th 
+                            mat-header-cell 
+                            *matHeaderCellDef
+                            [style.text-align]="'center'"
+                            [attr.colspan]="groupingHeader.columnSpans[i]"
+                            [style.border-right]="i < groupingHeader.columnNames.length - 1 ? 'solid 1px var(--color-border)' : ''"
+                        >
+                            {{ column }}
+                        </th>
+                    </ng-container>
+                </ng-container>
+
+
+                <!-- A partir de acá se renderizan filas -->
+
+
+                <ng-container *ngIf="groupingHeader.columnNames.length > 0">
+                    <tr mat-header-row
+                        *matHeaderRowDef="groupingHeader.columnNames"
+                        [style.height]="groupingHeaderHeight + 'px'"
+                        [style.position]="stickyTopPosition ? '-webkit-sticky' : 'relative'"
+                        [style.top]="stickyTopPosition ? stickyTopPosition : ''"
+                    ></tr>
+                </ng-container>
+
+                <tr mat-header-row
+                    *matHeaderRowDef="displayedColumns"
+                    [style.height]="headerHeight + 'px'"
+                    [style.position]="stickyTopPosition ? '-webkit-sticky' : 'relative'"
+                    [style.top]="stickyTopPosition ? stickyTopPosition : ''"
+                ></tr>
+
+                <ng-container>
+                    <tr
+                        mat-row
+                        *matRowDef="let row; columns: displayedColumns;"
+                        class="item-row"
+                        (click)="__onRowClick__(row)"
+                        (mouseenter)="__onRowEnter__(row)"
+                        (mouseleave)="this.hoverItem = null"
+                        [class.expanded-item-row]="expandableRows && expandedItem === row"
+                        [matTooltip]="hoverMessage"
+                        [matTooltipPosition]="'above'"
+                        [matTooltipDisabled]="hoverMessage ? false : true"
+                        [style.height]="rowHeight + 'px'"
+                        cdkDrag
+                        [cdkDragDisabled]="dragDisabled"
+                        cdkDragBoundary=".drag-container"
+                        [style.cursor]="expandableRows || onRowClickCallback ? 'pointer' : ''"
+                    ></tr>
+                </ng-container>
+
+                <tr
+                    mat-row *matRowDef="let _row; columns: ['detailRow'];"
+                    class="detail-row"
+                    [class.expanded-detail-row]="expandableRows && expandedItem === _row"
+                ></tr>
+            </table>
+        </ng-container>
+    </div>
+</div>
+
+<mat-paginator
+    id="paginator"
+    *ngIf="usePagination && data.length > pageSize"
+    [pageSizeOptions]="[pageSize]"
+    showFirstLastButtons
+    [hidePageSize]="true"
+    [style.border-bottom-left-radius]="borderRadius"
+    [style.border-bottom-right-radius]="borderRadius"
+    [style.border-width]="borderWidth"
+    [style.border-color]="borderColor"
+    [ngClass]="elevationClass"
+    (page)="handlePageEvent()"
+></mat-paginator>

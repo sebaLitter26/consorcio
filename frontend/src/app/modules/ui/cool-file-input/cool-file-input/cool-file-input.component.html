@@ -1,0 +1,57 @@
+<div 
+    class="file-upload-panel"
+    [style.height]="height"
+>
+    <div class="file-upload-container" *ngIf="showFilesInput">
+        <input
+            type="file"
+            #fileInput
+            id="uploadFile"
+            name="uploadFile"
+            [accept]="allowFilesExtensions"
+            multiple="multiple"
+            placeholder="Elegir archivos..."
+            (change)="_handleFilesChange($event)"
+        />
+        
+        <div class="file-upload-legend">
+            <i class="fa fa-upload fa-7x"></i>
+            <h2>
+                Seleccione o arrastre los archivos a subir
+                {{ maxTotalSize ? '(Max. ' + (maxTotalSize | appFileSize) + ')' : '' }}
+            </h2>
+        </div>
+    </div>
+
+    <div class="file-list-container"
+        *ngIf="showFilesList"
+        [style.max-height]="height"
+        [style.height]="height"
+    >
+        <div *ngFor="let file of files; let i = index;" class="image-row">
+            <div class="row-data">
+                <h3>
+                    {{ file.extension | uppercase }}
+                </h3>
+
+                <div class="file-progress">
+                    <p class="file-name">{{ file.name }}</p>
+                    <mat-progress-bar mode="determinate" [value]="file.progress"></mat-progress-bar>
+                    <p class="file-size">{{ file.loaded | appFileSize }} / {{ file.size | appFileSize }}</p>
+                </div>
+            </div>
+
+            <button
+                *ngIf="allowFilesRemoval"
+                mat-icon-button
+                (click)="removeFile(i)"
+            >
+                <mat-icon>{{ file.progress == 100 ? 'delete' : 'clear' }}</mat-icon>
+            </button>
+        </div>
+        
+        <h2 *ngIf="files.length == 0">
+            No se han cargado archivos
+        </h2>
+    </div>
+</div>

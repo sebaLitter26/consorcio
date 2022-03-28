@@ -1,0 +1,19 @@
+<main>
+    <mat-slider
+        #leftSlider
+        [value]="leftValue"
+        [step]="step"
+        [min]="minValue"
+        [max]="_rightSliderValue"
+        (change)="onLeftValueChange($event)"
+    ></mat-slider>
+
+    <mat-slider
+        #rightSlider
+        [value]="rightValue"
+        [step]="step"
+        [min]="_leftSliderValue"
+        [max]="maxValue"
+        (change)="onRightValueChange($event)"
+    ></mat-slider>
+</main>

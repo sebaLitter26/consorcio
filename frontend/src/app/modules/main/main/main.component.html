@@ -1,0 +1,11 @@
+<app-header class="header"></app-header>
+
+<div class="main-container">
+    <app-navbar class="navbar" [ngClass]="!navbarIsOpen ? 'closed-navbar-nav' : ''"></app-navbar>
+    
+    <div class="routes" [ngClass]="navbarIsOpen ? 'expanded' : ''">
+        <router-outlet></router-outlet>
+    </div>
+
+    <app-overlay-transparent></app-overlay-transparent>
+</div>

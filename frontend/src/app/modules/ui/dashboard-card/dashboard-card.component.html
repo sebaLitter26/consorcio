@@ -1,0 +1,22 @@
+<mat-card matRipple>
+    <mat-card-content>
+        <header>
+            <h2 [style.font-size]="descriptionSize">{{ description }}</h2>
+
+            <div class="icon-container">
+                <i
+                    [ngClass]="icon"
+                    [style.color]="color"
+                ></i>
+
+                <div
+                    class="icon-wrapper"
+                    [style.background-color]="color"
+                >
+                </div>
+            </div>
+        </header>
+
+        <h1 [style.font-size]="valueSize">{{ value }}</h1>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,115 @@
+$icons-size: 40px;
+$background-color: var(--color-card-background);
+$list-color: var(--color-background);
+
+.mat-card {
+    padding: 0;
+    width: var(--navbar-width);
+    height: 100%;
+    border-radius: 0;
+
+    background-color: $background-color;
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    border-right: solid 1px var(--color-border);
+}
+
+.mat-card-content {
+    position: relative;
+
+    height: 100%;
+    padding-top: 0;
+    margin: 0;
+}
+
+.mat-expansion-panel {
+    background-color: $background-color;
+}
+
+a {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+i:first-child {
+    margin: 0;
+}
+
+i {
+    margin-right: 0.25rem;
+}
+
+.mat-nav-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: $list-color;
+}
+
+.mat-nav-list {
+    .mat-list-item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        width: 100%;
+        overflow: hidden;
+     }
+}
+
+
+.mat-list-base {
+    padding: 0;
+}
+
+.mat-expansion-panel-spacing {
+    margin: 0;
+}
+
+::ng-deep.mat-expansion-panel-content > .mat-expansion-panel-body {
+    padding: 0;
+}
+
+::ng-deep.mat-list-base .mat-list-item .mat-list-item-content, ::ng-deep.mat-list-base .mat-list-option .mat-list-item-content {
+    width: 100%;
+    padding: 0 32px;
+    font-size: 12px;
+}
+
+.mat-nav-list > .mat-list-item.highlight {
+    background-color: var(--color-accent);
+    color: white;
+}
+
+.version-tag {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: var(--navbar-width);
+    background-color: $background-color;
+    padding: 0.5rem;
+    box-sizing: border-box;
+
+    .mat-chip {
+        cursor: pointer;
+        --webkit-user-select: none;
+    }
+
+    .mat-chip:nth-child(even) {
+        background-color: var(--color-accent);
+    }
+}
+
+.line-clampin {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: inline;
+  max-width: 100px;
+}

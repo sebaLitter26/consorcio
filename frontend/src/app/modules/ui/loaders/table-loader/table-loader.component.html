@@ -1,0 +1,38 @@
+<main
+    [style.background-color]="backgroundColor"
+    [style.width]="width"
+    [style.border-radius]="borderRadius"
+>
+    <ng-container *ngFor="let column of _columns">
+        <div class="column">
+            <div 
+                class="row"
+                [style.padding]="rowPadding"
+                [style.height]="headerRowHeight"
+            >
+                <div 
+                    class="cell"
+                    [style.background-color]="headerCellColor"
+                    [style.border-radius]="cellBorderRadius"
+                    [style.width]="headerCellWidth"
+                    [style.height]="headerCellHeight"
+                ></div>
+            </div>
+            <ng-container *ngFor="let row of _rows">
+                <div
+                    class="row"
+                    [style.padding]="rowPadding"
+                    [style.height]="dataRowHeight"
+                >
+                    <div 
+                        class="cell"
+                        [style.background-color]="dataCellColor"
+                        [style.border-radius]="cellBorderRadius"
+                        [style.width]="dataCellWidth"
+                        [style.height]="dataCellHeight"
+                    ></div>
+                </div>
+            </ng-container>
+        </div>
+    </ng-container>
+</main>

@@ -1,0 +1,110 @@
+$clear-btn-size: 24px;
+
+:host {
+    width: 100%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+p {
+    margin-bottom: 5px;
+    color: var(--color-text);
+}
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 5px 20px;
+    border-radius: 55px;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    // border: solid 1px #dadce0;
+
+    color: var(--color-text);
+    background-color: var(--color-card-background);
+
+    .icon {
+        margin-right: 7.5px;
+    }
+
+    .mat-icon {
+        color: var(--color-icon);
+    }
+
+    .clear-btn {
+        ::ng-deep.mat-button-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &:disabled {
+            .mat-icon {
+                color: var(--color-text-disabled);
+            }
+        }
+    }
+
+    input {
+        outline: none;
+        border: none;
+        width: 100%;
+        padding: 5px 0px;
+        box-sizing: border-box;
+        background-color: transparent;
+        caret-color: var(--color-accent);
+        color: var(--color-text);
+        font-size: 16px;
+
+        &::placeholder {
+            font-size: inherit;
+        }
+    }
+    
+    input:focus::placeholder {
+        color: var(--color-accent);
+    }
+
+
+    .options-container {
+        border-left: solid 1px var(--color-border);
+        padding-left: 1em;
+        min-width: 10em;
+
+        button {
+            width: 100%;
+            text-align: right;
+
+            span {
+                color: var(--color-text);
+            }
+    
+            .mat-icon {
+                color: var(--color-accent);
+            }
+    
+            ::ng-deep.mat-button-wrapper {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                text-align: right;
+            }
+        }
+    
+        button:hover {
+            span {
+                color: var(--color-accent);
+            }
+        }
+    }
+}

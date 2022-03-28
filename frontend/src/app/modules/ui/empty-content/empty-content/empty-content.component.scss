@@ -1,0 +1,34 @@
+:host {
+    width: 100%;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+
+    box-sizing: border-box;
+
+    i {
+        color: var(--color-icon);
+        margin-bottom: 0.5rem;
+    }
+
+    h2, h3 {
+        color: var(--color-text-fade);
+    }
+
+    h2 {
+        margin-bottom: 0.25rem;
+    }
+
+    h3 {
+        margin: 0;
+    }
+}

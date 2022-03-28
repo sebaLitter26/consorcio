@@ -1,0 +1,83 @@
+<p 
+    *ngIf="label"
+    [style.margin-left]="'calc(' + (icon ? iconSize : '24px') + ' + 0px)'"
+>
+    {{ label }}
+</p>
+
+
+<div
+    class="input-container"
+    [style.width]="width"
+    [style.border-style]="borderStyle"
+    [style.border-width]="borderWidth"
+    [style.border-color]="borderColor"
+>
+    <mat-icon
+        class="icon"
+        *ngIf="icon != null"
+        [style.width]="iconSize"
+        [style.height]="iconSize"
+        [style.font-size]="iconSize"
+        [style.line-height]="iconSize"
+    >
+        {{ icon }}
+    </mat-icon>
+
+    <input
+        [id]="_id"
+        [placeholder]="placeholder"
+        [formControl]="inputControl"
+        [style.font-size]="fontSize"
+        [type]="type"
+        (keydown)="onKeyDownCallback ? onKeyDownCallback($event) : null"
+        (click)="$event.stopPropagation()"
+        autocomplete="off"
+    >
+    
+    <button
+        *ngIf="(type == 'password' || _passwordIsVisible) && usePasswordVisibilityToggle"
+        mat-icon-button
+        (click)="togglePasswordVisibility()"
+    >
+        <mat-icon>{{ _passwordIsVisible ? 'visibility' : 'visibility_off' }}</mat-icon>
+    </button>
+
+    <button
+        *ngIf="useClearButton"
+        mat-icon-button
+        (click)="inputControl.setValue(null); $event.stopPropagation();"
+        class="clear-btn"
+        [style.height]="'calc(' + fontSize + ' * 2)'"
+        [style.line-height]="'calc(' + fontSize + ' * 2)'"
+        [style.width]="'calc(' + fontSize + ' * 2)'"
+        [style.font-size]="'calc(' + fontSize + ' * 2)'"
+        [disabled]="!inputControl.value"
+    >
+        <mat-icon
+            [style.height]="fontSize"
+            [style.line-height]="fontSize"
+            [style.width]="fontSize"
+            [style.font-size]="fontSize"
+        >
+            clear
+        </mat-icon>
+    </button>
+
+    <div class="options-container" *ngIf="options.length > 0">
+        <button
+            mat-button
+            color="accent"
+            [matMenuTriggerFor]="inputOptions"
+        >
+            <span>{{ _selectedOptionIndex !== null ? options[_selectedOptionIndex]?.displayValue : optionsButtonText }}</span>
+            <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+    </div>
+</div>
+
+<mat-menu #inputOptions>
+    <button mat-menu-item *ngFor="let option of options; let i = index;" (click)="emitSelectedOption(i)">
+        {{ option.displayValue }}
+    </button>
+</mat-menu>

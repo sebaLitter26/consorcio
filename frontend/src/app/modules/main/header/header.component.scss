@@ -1,0 +1,95 @@
+$image-size: 32px;
+
+@mixin flex-row-center-start {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.mat-toolbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 8px;
+
+    background-color: var(--color-background);
+
+    height: var(--toolbar-height);
+    z-index: 20;
+    overflow: visible;
+
+    border-bottom: solid 1px var(--color-border);
+
+    .navbar {
+        @include flex-row-center-start();
+    }
+
+    .profile {
+        @include flex-row-center-start();
+        cursor: pointer;
+        padding: 5px 10px 5px 10px;
+        border-radius: 5px;
+        user-select: none;
+        -webkit-user-select: none;
+
+        h3 {
+            margin-right: 0.5rem;
+            font-size: 14px;
+            font-weight: 100;
+        }
+
+        img {
+            width: $image-size;
+            height: $image-size;
+            border-radius: 50%;
+            border: 1px solid #eceff1;
+        }
+    }
+}
+
+img {
+    margin-left: auto;
+}
+
+h1 {
+    font-size: 16px;
+}
+
+.sandbox-mode-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@media(max-width: 599px) {
+    .mat-toolbar {
+        background-color: var(--color-card-background);
+        border: none;
+    }
+}
+
+button {
+    ::ng-deep.mat-button-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+.btn-version {
+    min-width: 55px;
+    margin-left: 0.5rem;
+}
+
+p {
+    margin: 0;
+}
+
+::ng-deep.mat-menu-content:not(:empty) {
+    padding: 0;
+}

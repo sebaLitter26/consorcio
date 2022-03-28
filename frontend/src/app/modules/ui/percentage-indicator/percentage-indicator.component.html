@@ -1,0 +1,20 @@
+<div class="progress">
+    <mat-progress-spinner
+        [ngClass]="colorClass"
+        [value]="percentage"
+        [strokeWidth]="strokeWidth"
+        [diameter]="diameter"
+    ></mat-progress-spinner>
+    <div class="values">
+        <h2 *ngIf="value">
+            {{ value }}
+        </h2>
+        <h3
+            *ngIf="percentage >= 0"
+            [ngClass]="colorClass"
+            [style.font-size]="diameter / 4 + 'px'"
+        >
+            {{ percentage }}%
+        </h3>
+    </div>
+</div>

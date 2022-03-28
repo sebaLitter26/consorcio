@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>
+    {{ data.title }}
+</h2>
+<mat-dialog-content>
+    <p>{{ data.message }}</p>
+    <mat-form-field *ngIf="data.showObservation">
+        <mat-label>{{ data.observationLabel ?? 'Observación'}}</mat-label>
+        <textarea matInput [placeholder]="data.observationPlaceholder ?? 'Ingrese una observación...'" [formControl]="observationControl"></textarea>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-stroked-button [color]="data.color" [mat-dialog-close]="false">No</button>
+    <button mat-flat-button [color]="data.color" cdk-focus-initial [mat-dialog-close]="observationControl.value ?? true">Sí</button>
+</mat-dialog-actions>

@@ -1,0 +1,28 @@
+<main>
+    <h2>Autorizar acción</h2>
+
+    <h3>La acción solicitada requiere elevación, por favor, ingrese las credenciales de un supervisor:</h3>
+
+    <form (ngSubmit)="validateAdminUser()" [formGroup]="credentialsFormGroup">
+        <mat-form-field appearance="fill">
+            <mat-label>Usuario</mat-label>
+            <input matInput placeholder="Ingrese usuario..." formControlName="username" autocomplete="off" type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Contraseña</mat-label>
+            <input matInput placeholder="Ingrese contraseña..." formControlName="password" autocomplete="off" type="password">
+        </mat-form-field>
+
+        <button
+            mat-flat-button
+            color="accent"
+            appRoundButton
+            type="submit"
+            [disabled]="credentialsFormGroup.invalid"
+        >
+            <mat-icon>vpn_key</mat-icon>&nbsp;
+            Autorizar
+        </button>
+    </form>
+</main>

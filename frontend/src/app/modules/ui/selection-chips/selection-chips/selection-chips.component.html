@@ -1,0 +1,7 @@
+<main>
+    <ng-container *ngFor="let option of _selectionList">
+        <div class="option" matRipple [ngClass]="option.selected ? 'selected' : 'non-selected'" (click)="setSelection(option)">
+            {{ displayKey ? option.value[displayKey] : option.value }}
+        </div>
+    </ng-container>
+</main>

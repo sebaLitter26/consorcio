@@ -1,0 +1,19 @@
+<main
+    matRipple
+    (click)="onClick.emit(true)"
+    [style.background-color]="backgroundColor"
+    [style.color]="color"
+    [style.border-radius]="borderRadius"
+    [style.border-color]="color"
+    [style.border-width]="borderWidth"
+    [style.padding]="padding"
+    [style.height]="height"
+    [style.width]="width"
+    [ngClass]="elevationClass"
+>
+    <i [ngClass]="icon"></i>
+    <p 
+        [style.font-size]="fontSize"
+        [style.line-height]="fontSize"
+    >{{ description }}</p>
+</main>
